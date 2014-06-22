@@ -56,7 +56,7 @@ void curve_renderer::sample_curve(int sample_count)
 	if (step<=0.0)
 		return;
 
-	for (double t=curve->get_min_t(); t<=curve->get_max_t(); t+=step){
+	for (double t=curve->get_min_t(); t<=curve->get_max_t()+0.000001; t+=step){
 		//std::cout<<"t: "<<t<<"   point: "<<curve->evaluate(t)<<std::endl;
 		
 		//Einfügen der Vektoren in die Liste Samples mit der vorher berechneten Schrittweite
@@ -149,6 +149,7 @@ void curve_renderer::set_basis_color(int i)
 void curve_renderer::render_basis_functions()
 {
 	double t_max = curve->get_max_t();
+	double t_min = curve->get_min_t();
 
 	// Only render the axes if the range is too small
 	if (t_max <=0.0) {
@@ -179,21 +180,23 @@ void curve_renderer::render_basis_functions()
                    Basisfunktionen direkt als Eingaben fuer die Liniensegmente verwenden
                    koennen.
 	************/
-
-	/* 
-	Funktioniert nicht
-	Methoden werden wahrscheinlich verwendet
-	FRAGE: Wie kommt man auf die Basis-Funktion?
-
-
-	for(int i = 0; i < ;i++){
-		set_basis_color(i);
-		curve->evaluate_basis(i, t_max);
-		render_curve();
+	
+	
+	//Anzahl der Kontrollpunkte = Anzahl der Basisfunktionen
+	int controlPoints = curve->get_control_points().size();
+	//for: jede Basisfunktion...
+	for(int i = 0; i <= controlPoints-1; i++){
 		
+		glBegin(GL_LINE_STRIP);
+		//... eine andere Farbe
+		set_basis_color(i);
+		//... eine eigene Funktion für alle t evaluieren
+		for(double t = t_min; t <= t_max; t += (t_max-t_min)/basis_width){
+			glVertex2d(t, curve->evaluate_basis(i, t));
+		}
+		glEnd();
 	}
-	*/
-
+	
 	glPopMatrix();
 
 
