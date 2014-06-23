@@ -56,7 +56,7 @@ void curve_renderer::sample_curve(int sample_count)
 	if (step<=0.0)
 		return;
 
-	for (double t=curve->get_min_t(); t<=curve->get_max_t()+0.000001; t+=step){
+	for (double t=curve->get_min_t(); t<=curve->get_max_t(); t+=step){
 		//std::cout<<"t: "<<t<<"   point: "<<curve->evaluate(t)<<std::endl;
 		
 		//Einfügen der Vektoren in die Liste Samples mit der vorher berechneten Schrittweite
