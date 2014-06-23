@@ -44,7 +44,6 @@ point2d abstract_curve::evaluate(double t)
    **********/
 
 	for(int i = 0; i < control_points.size(); i++){
-		//WIESO SUMME?
 		//control_points = Vektoren
 		//evaluate_basis("Index des Kontrollpunktes", "Parameter t")
 		sample += evaluate_basis(i, t) * control_points[i];

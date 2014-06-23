@@ -14,14 +14,14 @@ bezier_curve::bezier_curve(vector<point2d>& control_points): abstract_curve(cont
 // A helper function to calculate "n choose k"
 double bezier_curve::binomial_coefficient(int n, int k)
 {
-    int res = 1;
+    double res = 1;
  
     // B(n, k) = B(n, n-k)
     if ( k > n - k )
         k = n - k;
  
     // Berechnet [n * (n-1) * ... * (n-k+1)] / [k * (k-1) * ... * 1]
-    for (int i = 0; i < k; ++i)
+    for (double i = 0; i < k; i+=1)
     {
         res *= (n - i);
         res /= (i + 1);
